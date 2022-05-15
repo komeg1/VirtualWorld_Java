@@ -4,20 +4,18 @@ import com.java.virtual.world.Coordinates;
 import com.java.virtual.world.World;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Vector;
+import java.util.*;
 
 abstract public class Organism {
     protected int lifetime=0;
     private final int power;
     private final int initiative;
+    private int killed=0;
     protected Coordinates coordinates;
     private final Color color;
     private final String sign;
     protected World world;
-    private int killed=0;
+
 
 
     public Organism(World world,int initiative,int power, Coordinates coordinates, Color color, String sign){
@@ -38,9 +36,11 @@ abstract public class Organism {
     }
     public void setCoordinates(Coordinates newCoords){
         Coordinates oldCoords = this.coordinates;
+        this.coordinates=newCoords;
+
         Organism[][] temp = world.getWorldBoard();
         temp[oldCoords.GetY()][oldCoords.GetX()]=null;
-        this.coordinates=newCoords;
+
         temp[newCoords.GetY()][newCoords.GetX()]=this;
         world.setWorldBoard(temp);
 
@@ -50,7 +50,6 @@ abstract public class Organism {
     public int getLifetime(){
         return lifetime;
     }
-
     public int getPower(){
         return power;
     }
@@ -60,22 +59,21 @@ abstract public class Organism {
     public int getKilled(){
         return killed;
     }
-    public void setKilled(){
-        this.killed=1;
-    }
     public Coordinates getCoordinates() {
         return coordinates;
     }
-
     public Color getColor() {
         return color;
     }
-
     public String getSign() {
         return sign;
     }
 
-    public Coordinates GenerateNewCoordinates(){
+    public void setKilled(){
+        this.killed=1;
+    }
+
+    public Coordinates GenerateNewCoordinates(int action){
         Vector<Coordinates> coordinates = new Vector<>();
         int x1 = this.coordinates.GetX()-1;
         int x2 = this.coordinates.GetX() +1;
@@ -93,11 +91,13 @@ abstract public class Organism {
             for(int j=x1;j<=x2;j++) {
                 if(this.coordinates.GetX() == j && this.coordinates.GetY() == i)
                     continue;
-                else{
-                    System.out.println("CUR "+this.coordinates.GetX() + " "+this.coordinates.GetY());
-                    System.out.println("NEW "+j+ " "+i);
+                else if(world.getWorldBoard()[this.coordinates.GetY()][this.coordinates.GetX()]==null){
                     coordinates.addElement(new Coordinates(j, i));
-                    System.out.println(j +" "+i);
+                }
+                else
+                {
+                    if(action!=1)
+                        coordinates.addElement(new Coordinates(j,i));
                 }
             }
 
@@ -114,6 +114,9 @@ abstract public class Organism {
                 return i;
         return -1;
     }
+
+
+
 }
 
 

@@ -10,10 +10,11 @@ public class GameHUD extends JFrame {
     private GameArea gameArea;
     private World world;
 
+    private JTextArea logs;
     public GameHUD(int x,int y)
     {
         this.world = new World(x,y);
-        this.gameArea = new GameArea(x,y,world);
+        gameArea = this.world.area;
         setLayout(new GridBagLayout());
         JPanel grid = new JPanel(new GridLayout(x,y,1,1));
         for(int i=0;i<y;i++)
@@ -31,13 +32,23 @@ public class GameHUD extends JFrame {
         nextTurn.addActionListener(e->{
             world.NextTurn();
             gameArea.updateArea();
+            if(world.getLogs().size()>0)
+                logs.setText(world.getLogs().get(0)+"\n");
+            for(int i=1;i<world.getLogs().size();i++)
+                logs.append(world.getLogs().get(i)+"\n");
 
         });
         clear.setBounds(500,900,100,100);
         clear.addActionListener(e->{this.gameArea.updateArea();});
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        logs = new JTextArea(30,30);
+        JScrollPane logsScroll = new JScrollPane(logs);
+
+        add(logsScroll);
         add(clear);
         add(nextTurn);
+        getContentPane().setBackground(Color.white);
+        gameArea.updateArea();
         setVisible(true);
     }
 

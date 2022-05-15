@@ -24,6 +24,7 @@ public class Toolbar extends JPopupMenu {
         for(int i=0;i<menuLength;i++)
         {
             add(menuItems[i]);
+            menuItems[i].addActionListener(new OrganismListener(x,y,world,menuItems[i].getText()));
         }
     }
 }

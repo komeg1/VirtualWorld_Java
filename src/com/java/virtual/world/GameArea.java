@@ -21,7 +21,7 @@ public class GameArea extends JPanel {
         this.y =y;
         for(int i=0;i<y;i++) {
             for (int j = 0; j < x; j++) {
-                area[i][j] = new OrganismField(Color.lightGray, "G",j,i,world);
+                area[i][j] = new OrganismField(new Color(0,153,0), "",j,i,world);
             }
         }
         this.world=world;
@@ -39,7 +39,7 @@ public class GameArea extends JPanel {
     public void updateArea(){
         for(int i=0;i<y;i++)
             for(int j=0;j<x;j++) {
-                area[i][j].SetField(Color.lightGray, new JLabel("G"));
+                area[i][j].SetField(new Color(0,153,0), new JLabel(""));
             }
         for(int i=0;i<world.getOrganismsArray().size();i++) {
             Organism organism = world.getOrganismsArray().get(i);

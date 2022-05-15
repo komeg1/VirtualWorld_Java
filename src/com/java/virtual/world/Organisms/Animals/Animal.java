@@ -8,27 +8,24 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Animal extends Organism {
-    public Animal(int power, int initiative, int x, int y, World world, String sign) {
-        super(world, initiative, power, new Coordinates(x, y), Color.red, sign);
+    public Animal(int power, int initiative, int x, int y, World world, String sign,Color color) {
+        super(world, initiative, power, new Coordinates(x, y), color, sign);
 
     }
 
     @Override
     public void Action() {
         Coordinates oldCoords = this.coordinates;
-        Coordinates newCoords = GenerateNewCoordinates();
-        System.out.println(newCoords);
+        Coordinates newCoords = GenerateNewCoordinates(0);
         Organism[][] worldboard = world.getWorldBoard();
-        if (worldboard[newCoords.GetY()][newCoords.GetX()] == null) {
-            this.setCoordinates(newCoords);
 
-        }
+        if (worldboard[newCoords.GetY()][newCoords.GetX()] == null)
+            this.setCoordinates(newCoords);
         else {
             Organism other = worldboard[newCoords.GetY()][newCoords.GetX()];
             if (worldboard[newCoords.GetY()][newCoords.GetX()] != null) {
                 if (other.Collision(this)) {
-                    worldboard[newCoords.GetY()][newCoords.GetX()].setKilled();
-                    worldboard[newCoords.GetY()][newCoords.GetX()] = null;
+
                     this.setCoordinates(newCoords);
 
                 } else {
@@ -42,20 +39,36 @@ public class Animal extends Organism {
             world.setWorldBoard(worldboard);
 
         }
+        this.setLifetime(this.getLifetime()+1);
     }
 
     public boolean Collision(Organism other) {
+        Organism[][] worldboard = world.getWorldBoard();
         if(this.getPower()==other.getPower())
         {
-            if(this.lifetime>other.getLifetime())
-                return false;
-            else
+            if(this.lifetime<other.getLifetime())
+            {
+                world.AddLog(other,this,this.coordinates,"KILL");
+                this.setKilled();
+                worldboard[this.coordinates.GetY()][this.coordinates.GetX()] = null;
                 return true;
+            }
+            else {
+                world.AddLog(this,other,this.coordinates,"KILL");
+                return false;
+            }
         }
-        if(this.getPower()>other.getPower())
-            return false;
-        else
+        else if(this.getPower()<other.getPower())
+        {
+            world.AddLog(other,this,this.coordinates,"KILL");
+            this.setKilled();
+            worldboard[this.coordinates.GetY()][this.coordinates.GetX()] = null;
             return true;
+        }
+        else {
+            world.AddLog(this,other,this.coordinates,"KILL");
+            return false;
+        }
 
     }
 }
