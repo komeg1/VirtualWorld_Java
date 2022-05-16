@@ -1,8 +1,6 @@
 package com.java.virtual.world;
 
-import com.java.virtual.world.Organisms.Animals.Antelope;
-import com.java.virtual.world.Organisms.Animals.Sheep;
-import com.java.virtual.world.Organisms.Animals.Wolf;
+import com.java.virtual.world.Organisms.Animals.*;
 import com.java.virtual.world.Organisms.Organism;
 
 import javax.swing.*;
@@ -10,8 +8,10 @@ import java.awt.image.AreaAveragingScaleFilter;
 import java.sql.Array;
 import java.util.*;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 public class World {
-    private ArrayList<Organism> organisms = new ArrayList<>();
+    private Vector<Organism> organisms = new Vector<>();
     private Organism[][] worldBoard;
     private final int worldX;
     private final int worldY;
@@ -31,8 +31,7 @@ public class World {
 
 
         new Wolf(0,0,this);
-        new Sheep(3,3,this);
-        new Antelope(5,5,this);
+        new Wolf(1,1,this);
 
     }
 
@@ -45,7 +44,7 @@ public class World {
     public Organism[][] getWorldBoard(){
         return worldBoard;
     }
-    public ArrayList<Organism> getOrganismsArray() {
+    public Vector<Organism> getOrganismsArray() {
         return organisms;
     }
     public Vector<String> getLogs(){
@@ -56,7 +55,7 @@ public class World {
         this.logs=logs;
     }
 
-    public void setOrganismsArray(ArrayList<Organism> arr){
+    public void setOrganismsArray(Vector<Organism> arr){
         this.organisms = arr;
     }
     public void setWorldBoard(Organism[][] worldBoard){
@@ -69,10 +68,11 @@ public class World {
         sortOrganisms();
     turn++;
         logs.addElement("TURA "+turn);
-        for (Organism organism : organisms) {
-            if(organism.getKilled()==0)
-                organism.Action();
+        for (int i=0;i<organisms.size(); i++) {
+            if(organisms.get(i).getKilled()==0)
+                organisms.get(i).Action();
         }
+        sortOrganisms();
         ClearDeaths();
         PrintLogs();
     }
@@ -82,6 +82,7 @@ public class World {
             if(organism.getKilled()==1)
                 toRemove.add(organism.GetIndex());
         }
+        toRemove.sort(Collections.reverseOrder());
         for(Integer x : toRemove) {
             int index = x;
             organisms.remove(index);
@@ -109,6 +110,10 @@ public class World {
             logs.addElement("ZABOJSTWO: '"+ a.getSign() + "' zabija '"+b.getSign()+"' na pozycji x: "+coords.GetX()+ " y: "+coords.GetY());
         else if(Objects.equals(type,"ESCAPE"))
             logs.addElement("UCIECZKA: '"+a.getSign()+"' ucieka przed walką");
+        else if(Objects.equals(type,"BLOCK"))
+            logs.addElement("BLOK: '"+a.getSign()+"' blokuje atak '"+b.getSign()+"'");
+        else if(Objects.equals(type,"BREED"))
+            logs.addElement("ROZMNOZENIE: '"+a.getSign()+"' na polu x: "+coords.GetX()+" y: "+coords.GetY());
 
 
     }
@@ -119,14 +124,30 @@ public class World {
 
     public void AddOrganism(Coordinates coords,String name){
         Organism toAdd;
-        switch(name)
+        if(worldBoard[coords.GetY()][coords.GetX()]!=null)
+            showMessageDialog(null, "Te pole nie jest wolne");
+            else
         {
-            case "Wolf":
-                toAdd = new Wolf(coords.GetX(),coords.GetY(),this);
-                break;
+            switch (name) {
+                case "Wolf":
+                    toAdd = new Wolf(coords.GetX(), coords.GetY(), this);
+                    break;
+                case "Antelope":
+                    toAdd = new Antelope(coords.GetX(), coords.GetY(), this);
+                    break;
+                case "Sheep":
+                    toAdd = new Sheep(coords.GetX(), coords.GetY(), this);
+                    break;
+                case "Turtle":
+                    toAdd = new Turtle(coords.GetX(), coords.GetY(), this);
+                    break;
+                case "Fox":
+                    toAdd = new Fox(coords.GetX(), coords.GetY(), this);
+                    break;
+            }
+
+            area.updateArea();
         }
-        sortOrganisms();
-        area.updateArea();
 
 
 

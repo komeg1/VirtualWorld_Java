@@ -5,12 +5,13 @@ import com.java.virtual.world.Organisms.Organism;
 import com.java.virtual.world.World;
 
 import java.awt.*;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Vector;
 
 public class Antelope extends Animal {
     public Antelope(int x, int y, World world) {
-        super(4, 4, x, y, world, "A", Color.orange);
+        super(4, 4, x, y, world, "A", "Antelope",new Color(94, 28, 28));
     }
 
 
@@ -18,10 +19,11 @@ public class Antelope extends Animal {
     public boolean Collision(Organism other) {
         if (this.isBlocked()) {
             world.AddLog(this,other,this.coordinates,"ESCAPE");
-            this.Run();
+            if(this.Run())
             return true;
         }
         Organism[][] worldboard = world.getWorldBoard();
+
         if (this.getPower() == other.getPower()) {
             if (this.lifetime < other.getLifetime()) {
                 this.setKilled();
@@ -31,6 +33,8 @@ public class Antelope extends Animal {
             }
             else {
                 world.AddLog(this,other,this.coordinates,"KILL");
+                other.setKilled();
+                worldboard[other.getCoordinates().GetY()][other.getCoordinates().GetX()] = null;
                 return false;
             }
         } else if (this.getPower() < other.getPower()) {
@@ -40,6 +44,8 @@ public class Antelope extends Animal {
             return true;
         } else {
             world.AddLog(this,other,this.coordinates,"KILL");
+            other.setKilled();
+            worldboard[other.getCoordinates().GetY()][other.getCoordinates().GetX()] = null;
             return false;
         }
 
@@ -53,13 +59,18 @@ public class Antelope extends Animal {
 
     }
 
-    void Run() {
-        Coordinates newCoords = GenerateNewCoordinates(3);
-        this.setCoordinates(newCoords);
+    boolean Run() {
+        Coordinates newCoords = RandomCoordinate(GenerateNewCoordinates(3));
+        if(newCoords.GetY() == -1)
+            return false;
+        else {
+            this.setCoordinates(newCoords);
+            return true;
+        }
     }
 
     @Override
-    public Coordinates GenerateNewCoordinates(int action) {
+    public Vector<Coordinates> GenerateNewCoordinates(int action) {
         Vector<Coordinates> coordinates = new Vector<>();
         int x1,x2,y1,y2;
         if(action!=3) {
@@ -80,9 +91,9 @@ public class Antelope extends Animal {
         if (y1 < 0)
             y1 = 0;
         if (x2 >= this.world.getWorldX())
-            x2 -= 1;
+            x2 =this.world.getWorldX()-1;
         if (y2 >= this.world.getWorldY())
-            y2 -= 1;
+            y2 = this.world.getWorldY()-1;
         for (int i = y1; i <= y2; i++)
             for (int j = x1; j <= x2; j++) {
                 if (this.coordinates.GetX() == j && this.coordinates.GetY() == i)
@@ -96,7 +107,7 @@ public class Antelope extends Animal {
             }
         Random seed = new Random();
 
-        return  coordinates.get(seed.nextInt(coordinates.size()));
+        return coordinates;
     }
 }
 

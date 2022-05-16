@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class Sheep extends Animal{
     public Sheep(int x, int y, World world) {
-        super(4, 4, x, y, world, "S", Color.yellow);
+        super(4, 4, x, y, world, "S","Sheep", Color.yellow);
     }
     }
 

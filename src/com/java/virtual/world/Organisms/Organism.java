@@ -11,20 +11,23 @@ abstract public class Organism {
     private final int power;
     private final int initiative;
     private int killed=0;
+    private int breedingTimeout=0;
     protected Coordinates coordinates;
     private final Color color;
     private final String sign;
+    private final String fullName;
     protected World world;
 
 
 
-    public Organism(World world,int initiative,int power, Coordinates coordinates, Color color, String sign){
+    public Organism(World world,int initiative,int power, Coordinates coordinates, Color color, String sign,String fullname){
         this.power=power;
         this.initiative=initiative;
         this.coordinates=coordinates;
         this.world=world;
         this.color=color;
         this.sign=sign;
+        this.fullName = fullname;
         world.getWorldBoard()[coordinates.GetY()][coordinates.GetX()] = this;
         world.getOrganismsArray().add(this);
     }
@@ -46,7 +49,6 @@ abstract public class Organism {
 
 
     }
-
     public int getLifetime(){
         return lifetime;
     }
@@ -59,6 +61,7 @@ abstract public class Organism {
     public int getKilled(){
         return killed;
     }
+    public int getBreedingTimeout(){return breedingTimeout;}
     public Coordinates getCoordinates() {
         return coordinates;
     }
@@ -68,12 +71,12 @@ abstract public class Organism {
     public String getSign() {
         return sign;
     }
-
+    public String getFullName(){return fullName;}
     public void setKilled(){
         this.killed=1;
     }
-
-    public Coordinates GenerateNewCoordinates(int action){
+    public void setBreedingTimeout(int breed){this.breedingTimeout=breed;}
+    public Vector<Coordinates> GenerateNewCoordinates(int action){
         Vector<Coordinates> coordinates = new Vector<>();
         int x1 = this.coordinates.GetX()-1;
         int x2 = this.coordinates.GetX() +1;
@@ -91,31 +94,46 @@ abstract public class Organism {
             for(int j=x1;j<=x2;j++) {
                 if(this.coordinates.GetX() == j && this.coordinates.GetY() == i)
                     continue;
-                else if(world.getWorldBoard()[this.coordinates.GetY()][this.coordinates.GetX()]==null){
+                else if(world.getWorldBoard()[i][j]==null){
                     coordinates.addElement(new Coordinates(j, i));
                 }
                 else
                 {
-                    if(action!=1)
-                        coordinates.addElement(new Coordinates(j,i));
+                    if(action!=1) {
+                        coordinates.addElement(new Coordinates(j, i));
+
+                    }
                 }
+
             }
 
-        Random seed = new Random();
+        return coordinates;
 
-        return  coordinates.get(seed.nextInt(coordinates.size()));
+
     }
 
+    public Coordinates RandomCoordinate(Vector<Coordinates> coords){
+        Random seed = new Random();
+
+        if(coords.size()>0)
+        return  coords.get(seed.nextInt(coords.size()));
+        return new Coordinates(-1,-1);
+    }
     public int GetIndex()
     {
-        ArrayList<Organism> organisms = world.getOrganismsArray();
+        Vector<Organism> organisms = world.getOrganismsArray();
         for (int i = 0; i < organisms.size(); i++)
             if (this.coordinates == organisms.get(i).coordinates)
                 return i;
         return -1;
     }
 
-
+    public boolean CheckIfOrganism(Coordinates coords){
+        return world.getWorldBoard()[coords.GetY()][coords.GetX()] != null;
+    }
+    public Organism FindOrganism(Coordinates coords){
+        return world.getWorldBoard()[coords.GetY()][coords.GetX()];
+    }
 
 }
 
