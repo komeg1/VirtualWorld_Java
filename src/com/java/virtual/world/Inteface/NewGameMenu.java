@@ -1,9 +1,7 @@
-package com.java.virtual.world;
+package com.java.virtual.world.Inteface;
 
 import javax.swing.*;
 
-import com.java.virtual.world.GameHUD;
-import com.java.virtual.world.Menu;
 import static javax.swing.JOptionPane.showMessageDialog;
 public class NewGameMenu extends JFrame {
     private final JLabel worldX = new JLabel("Set world X size");

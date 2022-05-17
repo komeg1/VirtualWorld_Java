@@ -1,4 +1,4 @@
-package com.java.virtual.world;
+package com.java.virtual.world.Inteface;
 
 import com.java.virtual.world.Organisms.Organism;
 

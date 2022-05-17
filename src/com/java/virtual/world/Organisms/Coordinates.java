@@ -1,4 +1,4 @@
-package com.java.virtual.world;
+package com.java.virtual.world.Organisms;
 
 public class Coordinates {
     private int x;

@@ -1,22 +1,28 @@
 package com.java.virtual.world.Organisms.Animals;
 
-import com.java.virtual.world.Coordinates;
+import com.java.virtual.world.Organisms.Coordinates;
 import com.java.virtual.world.Organisms.Organism;
-import com.java.virtual.world.World;
+import com.java.virtual.world.WorldManager.World;
 
-import java.awt.*;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Vector;
 
 public class Antelope extends Animal {
     public Antelope(int x, int y, World world) {
-        super(4, 4, x, y, world, "A", "Antelope",new Color(94, 28, 28));
+        super(4, 4, x, y, world, "A", "Antelope",world.getColors().getColor("Antelope"));
     }
 
 
     @Override
     public boolean Collision(Organism other) {
+        if(this.getSign()==other.getSign())
+        {
+            if(Breeding(other)) {
+                world.AddLog(this,other,this.coordinates,"BREED");
+
+            }
+            return false;
+        }
         if (this.isBlocked()) {
             world.AddLog(this,other,this.coordinates,"ESCAPE");
             if(this.Run())
@@ -94,18 +100,27 @@ public class Antelope extends Animal {
             x2 =this.world.getWorldX()-1;
         if (y2 >= this.world.getWorldY())
             y2 = this.world.getWorldY()-1;
-        for (int i = y1; i <= y2; i++)
-            for (int j = x1; j <= x2; j++) {
-                if (this.coordinates.GetX() == j && this.coordinates.GetY() == i)
-                    continue;
-                else if (world.getWorldBoard()[this.coordinates.GetY()][this.coordinates.GetX()] == null) {
-                    coordinates.addElement(new Coordinates(j, i));
-                } else {
-                    if (action != 1&&action!=3)
-                        coordinates.addElement(new Coordinates(j, i));
+
+        if(action == 1||action==3)
+        {
+            for (int i = y1; i <= y2; i++)
+                for (int j = x1; j <= x2; j++)
+                {
+                    Coordinates newCoords = new Coordinates(j,i);
+                    if(world.getWorldBoard()[i][j]==null)
+                        coordinates.add(newCoords);
                 }
-            }
-        Random seed = new Random();
+        }
+        else {
+            for (int i = y1; i <= y2; i++)
+                for (int j = x1; j <= x2; j++) {
+                    if (world.getWorldBoard()[i][j]==this)
+                        continue;
+                    else
+                        coordinates.addElement(new Coordinates(j, i));
+                    }
+        }
+
 
         return coordinates;
     }

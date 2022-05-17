@@ -1,14 +1,13 @@
 package com.java.virtual.world.Organisms;
 
-import com.java.virtual.world.Coordinates;
-import com.java.virtual.world.World;
+import com.java.virtual.world.WorldManager.World;
 
 import java.awt.*;
 import java.util.*;
 
 abstract public class Organism {
     protected int lifetime=0;
-    private final int power;
+    private int power;
     private final int initiative;
     private int killed=0;
     private int breedingTimeout=0;
@@ -90,26 +89,35 @@ abstract public class Organism {
             x2-=1;
         if (y2 == this.world.getWorldY())
             y2-=1;
-        for(int i=y1;i<=y2;i++)
-            for(int j=x1;j<=x2;j++) {
-                if(this.coordinates.GetX() == j && this.coordinates.GetY() == i)
-                    continue;
-                else if(world.getWorldBoard()[i][j]==null){
-                    coordinates.addElement(new Coordinates(j, i));
-                }
-                else
+
+        if(action == 1)
+        {
+            for(int i=y1;i<=y2;i++)
+                for(int j=x1;j<=x2;j++)
                 {
-                    if(action!=1) {
+                    Coordinates newCoordinates = new Coordinates(j,i);
+                    if(world.getWorldBoard()[i][j]==null)
+                        coordinates.add(newCoordinates);
+                }
+        }
+        else {
+            for (int i = y1; i <= y2; i++)
+                for (int j = x1; j <= x2; j++) {
+                    if (world.getWorldBoard()[i][j]==this)
+                        continue;
+                    else
                         coordinates.addElement(new Coordinates(j, i));
-
-                    }
                 }
 
-            }
+                }
 
         return coordinates;
 
 
+    }
+
+    public void AddGuaranaBoost(){
+        this.power+=3;
     }
 
     public Coordinates RandomCoordinate(Vector<Coordinates> coords){

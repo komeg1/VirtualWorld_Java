@@ -1,13 +1,10 @@
 package com.java.virtual.world.Organisms.Animals;
 
-import com.java.virtual.world.Coordinates;
+import com.java.virtual.world.Organisms.Coordinates;
 import com.java.virtual.world.Organisms.Organism;
-import com.java.virtual.world.World;
+import com.java.virtual.world.WorldManager.World;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
 import java.util.Vector;
 
 public class Animal extends Organism {
@@ -29,15 +26,7 @@ public class Animal extends Organism {
 
             if (worldboard[newCoords.GetY()][newCoords.GetX()] != null) {
                 Organism other = worldboard[newCoords.GetY()][newCoords.GetX()];
-                System.out.println(this.getSign()+other.getSign());
-                if(this.getSign()==other.getSign())
-                {
-                    if(Breeding(other)) {
-                        world.AddLog(this,other,this.coordinates,"BREED");
 
-                    }
-                    return;
-                }
                 if (other.Collision(this)) {
 
                     this.setCoordinates(newCoords);
@@ -59,6 +48,14 @@ public class Animal extends Organism {
 
     public boolean Collision(Organism other) {
         Organism[][] worldboard = world.getWorldBoard();
+        if(this.getSign()==other.getSign())
+        {
+            if(Breeding(other)) {
+                world.AddLog(this,other,this.coordinates,"BREED");
+
+            }
+            return false;
+        }
         if(this.getPower()==other.getPower())
         {
             if(this.lifetime<other.getLifetime())

@@ -1,10 +1,7 @@
-package com.java.virtual.world;
+package com.java.virtual.world.Inteface;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.DefaultMenuLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import com.java.virtual.world.NewGameMenu;
+
 public class Menu extends JFrame {
     private JButton newGame;
     private JButton loadGame;

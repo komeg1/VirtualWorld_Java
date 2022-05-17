@@ -1,4 +1,6 @@
-package com.java.virtual.world;
+package com.java.virtual.world.Inteface;
+
+import com.java.virtual.world.WorldManager.World;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

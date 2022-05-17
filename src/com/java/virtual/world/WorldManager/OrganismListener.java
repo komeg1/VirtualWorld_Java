@@ -1,6 +1,6 @@
-package com.java.virtual.world;
+package com.java.virtual.world.WorldManager;
 
-import com.java.virtual.world.Organisms.Organism;
+import com.java.virtual.world.Organisms.Coordinates;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
