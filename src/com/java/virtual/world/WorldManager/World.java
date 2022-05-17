@@ -5,6 +5,7 @@ import com.java.virtual.world.Organisms.Animals.*;
 import com.java.virtual.world.Organisms.Coordinates;
 import com.java.virtual.world.Organisms.Organism;
 import com.java.virtual.world.Organisms.Plants.*;
+import com.java.virtual.world.SavesManagement.Saving;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -29,6 +30,7 @@ public class World implements KeyListener {
     private int humanMove=KEY_NULL;
     private Vector<String> logs;
     private Colors colors = new Colors();
+
     public World(int x,int y){
         this.worldX=x;
         this.worldY=y;

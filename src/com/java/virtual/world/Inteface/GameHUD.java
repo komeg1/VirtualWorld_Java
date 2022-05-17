@@ -1,5 +1,6 @@
 package com.java.virtual.world.Inteface;
 
+import com.java.virtual.world.SavesManagement.Saving;
 import com.java.virtual.world.WorldManager.GameArea;
 import com.java.virtual.world.WorldManager.World;
 
@@ -30,13 +31,14 @@ public class GameHUD extends JFrame implements KeyListener{
     private JPanel grid;
     private int x;
     private int y;
-
+    private Saving save;
     private final JTextArea logs;
     public GameHUD(int x,int y)
     {
         this.x =x;
         this.y=y;
         this.world = new World(x,y);
+        this.save = new Saving(world);
         gameArea = this.world.getArea();
         setSize(1300,1000);
         setLocation(200,50);
@@ -63,8 +65,9 @@ public class GameHUD extends JFrame implements KeyListener{
         SetPlayerInformation();
         CreateGrid();
         CreateGameDescription();
-        JButton clear = new JButton("Clear");
+        JButton saveButton = new JButton("Save");
         JButton nextTurn = new JButton("Next Turn");
+
         nextTurn.setBounds(500,1000,100,100);
         nextTurn.addActionListener(e->{
             world.setHumanMove(KEY_NULL);
@@ -75,8 +78,8 @@ public class GameHUD extends JFrame implements KeyListener{
             requestFocus();
 
         });
-        clear.setBounds(500,900,100,100);
-        clear.addActionListener(e->{this.gameArea.updateArea();});
+        saveButton.setBounds(500,900,100,100);
+        saveButton.addActionListener(e->{save.Save();});
 
         logs = new JTextArea(20,20);
         JScrollPane logsScroll = new JScrollPane(logs);
@@ -87,7 +90,7 @@ public class GameHUD extends JFrame implements KeyListener{
         addKeyListener(this);
         setFocusable(true);
         topPanel.add(nextTurn);
-
+        topPanel.add(saveButton);
         gridPanel.add(logsScroll);
         gridPanel.add(playerInfo);
         gridPanel.add(gameDescription);
