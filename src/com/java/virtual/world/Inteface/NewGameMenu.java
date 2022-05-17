@@ -13,9 +13,12 @@ public class NewGameMenu extends JFrame {
     private final JSlider fulfillSlider = new JSlider(JSlider.HORIZONTAL,0,50,10);
     private final JLabel fulfillDesc = new JLabel("Percentage fulfill of organisms on map: 25%");
     private final JLabel worldX = new JLabel("Set world size: 20x20");
-    private final AuthorPanel authorPanel = new AuthorPanel();
+    private final JSpinner humanXSpinner = new JSpinner();
+    private final JSpinner humanYSpinner = new JSpinner();
     private int x;
     private int y;
+    private int humanX;
+    private int humanY;
     private double fulfill=0.25;
 
     NewGameMenu(){
@@ -45,11 +48,28 @@ public class NewGameMenu extends JFrame {
         options.add(fulfillDesc);
         options.add(fulfillSlider);
 
+        JPanel humanCoordinates = new JPanel();
+        humanCoordinates.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JLabel humanInfoX = new JLabel("Human position X: ");
+        JLabel humanInfoY = new JLabel(" Y: ");
+        Dimension size = new Dimension(60,30);
+        humanXSpinner.setPreferredSize(size);
+        humanXSpinner.setMinimumSize(size);
+        humanYSpinner.setPreferredSize(size);
+        humanYSpinner.setMinimumSize(size);
+        humanCoordinates.add(humanInfoX);
+        humanCoordinates.add(humanXSpinner);
+        humanCoordinates.add(humanInfoY);
+       humanCoordinates.add(humanYSpinner);
+
+        options.add(humanCoordinates);
         add(topPanel,BorderLayout.NORTH);
         add(options,BorderLayout.CENTER);
 
-
+        AuthorPanel authorPanel = new AuthorPanel();
         add(authorPanel,BorderLayout.SOUTH);
+
+
 
 
         setButtonActions();
@@ -74,10 +94,14 @@ public class NewGameMenu extends JFrame {
         nextButton.addActionListener(
                 e->{if(this.x<=0||this.y<=0)
                     showMessageDialog(null, "Zly rozmiar swiata");
+                    if(humanX>=x||humanY>=y)
+                    {
+                        showMessageDialog(null,("Invalid player positon. Player maximum position is X: "+(x-1)+" Y: "+(y-1)));
+                    }
                 else
                 {
                     setVisible(false);
-                    new GameHUD(x,y,fulfill,0,0);
+                    new GameHUD(x,y,fulfill,humanX,humanY);
                 }
                     }
         );
@@ -86,6 +110,18 @@ public class NewGameMenu extends JFrame {
                 e->{
                     this.fulfill = (0.01*fulfillSlider.getValue());
                     fulfillDesc.setText("Percentage fulfill of organisms on map: "+ this.fulfillSlider.getValue()+"%");
+                }
+        );
+
+        humanXSpinner.addChangeListener(
+                e->{
+                    humanX = (int)humanXSpinner.getValue();
+
+                }
+        );
+        humanYSpinner.addChangeListener(
+                e->{
+                    humanY = (int)humanYSpinner.getValue();
                 }
         );
 
