@@ -151,7 +151,7 @@ public class World implements KeyListener {
         else if(Objects.equals(type,"GUARANA"))
             logs.addElement("WZMOCNIENIE: '"+a.getSign() + "' zjadł guaranę. Jego siła wynosi: "+a.getPower());
         else if(Objects.equals(type,"BERRIES"))
-            logs.addElement("SMIERC: '"+a.getSign() + "zjadł wilcze jagody i umiera.");
+            logs.addElement("SMIERC: '"+a.getSign() + "' zjadł wilcze jagody i umiera.");
 
 
 
@@ -189,7 +189,7 @@ public class World implements KeyListener {
         int boardSize = worldY*worldX;
         human =new Human(humanX,humanY,this);
          int maxCreaturesAmount = (int)Math.round(fulfillPercentage*boardSize);
-        String[] organismsNames = {"Wolf","Antelope","Sheep","Turtle","Fox","Grass","Dandelion","Guarana","Sosnowski's Hogweed","Berries",};
+        String[] organismsNames = {"Wolf","Antelope","Sheep","Turtle","Fox","Grass","Dandelion","Guarana","Sosnowski'sHogweed","Berries",};
         Random seed = new Random();
         int x,y;
 
@@ -246,7 +246,7 @@ public class World implements KeyListener {
 
                 skillcooldown = Integer.parseInt(split[8]);
                 skillturnleft = Integer.parseInt(split[9]);
-                System.out.println(skillcooldown);
+
 
             }
             switch (sign) {
@@ -270,5 +270,6 @@ public class World implements KeyListener {
             }
 
         }
+        input.close();
     }
 }
