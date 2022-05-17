@@ -4,6 +4,7 @@ import com.java.virtual.world.Organisms.Coordinates;
 import com.java.virtual.world.Organisms.Organism;
 import com.java.virtual.world.WorldManager.World;
 
+import java.awt.*;
 import java.util.Random;
 
 
@@ -26,6 +27,19 @@ public class Human extends Animal{
         super(5, 4, x, y, world, "H", "Human", world.getColors().getColor("Human"));
 
 
+    }
+    public Human(int x,int y, World world, int power,int initiative, int lifetime, int breedingtimeout,String sign,boolean skillIsActive,int skillCooldown, int skillTurnLeft) {
+        super(power, initiative, x, y, world, "H", "Human", world.getColors().getColor("Human"),lifetime,breedingtimeout);
+
+        this.skillIsActive=skillIsActive;
+        this.skillCooldown=skillCooldown;
+        this.skillTurnLeft = skillTurnLeft;
+
+
+    }
+
+    public Human(World world){
+        super(4,4, -1, -1,world, "H", "Human", world.getColors().getColor("Human"),1);
     }
 
 
@@ -99,12 +113,12 @@ public class Human extends Animal{
         keyPressed = world.getHumanMove();
         if(keyPressed == KEY_F)
         {
-            if (getSkillIsActive() == true)
+            if (getSkillIsActive())
             {
                 if(this.getSkillTurnLeft()>0)
                     return;
             }
-            if (this.getSkillIsActive() ==false)
+            if (!this.getSkillIsActive())
             {
                 if (this.getSkillCooldown() > 0)
                     return;
@@ -149,7 +163,7 @@ public class Human extends Animal{
                 this.skillCooldown = SKILL_TURN_AMNT;
             }
         }
-	else if (this.skillIsActive == false)
+	else if (!this.skillIsActive)
         if (this.skillCooldown > 0)
         this.skillCooldown--;
     }

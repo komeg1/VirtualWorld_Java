@@ -30,6 +30,34 @@ abstract public class Organism {
         world.getWorldBoard()[coordinates.GetY()][coordinates.GetX()] = this;
         world.getOrganismsArray().add(this);
     }
+
+    public Organism(World world, int initiative, int power, Coordinates coordinates, Color color, String sign, String fullname, int lifetime, int breedingtimeout) {
+        this.power=power;
+        this.initiative=initiative;
+        this.coordinates=coordinates;
+        this.world=world;
+        this.color=color;
+        this.sign=sign;
+        this.fullName = fullname;
+        this.lifetime=lifetime;
+        this.breedingTimeout = breedingtimeout;
+        world.getWorldBoard()[coordinates.GetY()][coordinates.GetX()] = this;
+        world.getOrganismsArray().add(this);
+    }
+
+    public Organism(World world, int initiative, int power, Coordinates coordinates, Color color, String sign, String fullname, int isKilled) {
+        this.power=power;
+        this.initiative=initiative;
+        this.coordinates=coordinates;
+        this.world=world;
+        this.color=color;
+        this.sign=sign;
+        this.fullName = fullname;
+        this.killed=1;
+        world.getOrganismsArray().add(this);
+
+    }
+
     abstract public void Action();
     abstract public boolean Collision(Organism other);
 

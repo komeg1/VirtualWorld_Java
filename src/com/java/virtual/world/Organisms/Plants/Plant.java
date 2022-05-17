@@ -14,6 +14,10 @@ public abstract class Plant extends Organism {
 
     }
 
+    public Plant(int power, int initiative, int x, int y, World world, String sign, String fullname, Color color, int lifetime, int breedingtimeout) {
+        super(world,initiative,power,new Coordinates(x,y),color,sign,fullname,lifetime,breedingtimeout);
+    }
+
     public void Spread(){
         Coordinates currentCoords = this.coordinates;
         Vector<Coordinates> surrounding = GenerateNewCoordinates(1);

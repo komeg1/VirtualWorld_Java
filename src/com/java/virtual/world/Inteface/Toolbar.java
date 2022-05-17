@@ -24,7 +24,7 @@ public class Toolbar extends JPopupMenu {
         menuItems[6] = new JMenuItem("Dandelion");
         menuItems[7] = new JMenuItem("Guarana");
         menuItems[8] = new JMenuItem("Berries");
-        menuItems[9] = new JMenuItem("Sosnowski's Hogweed");
+        menuItems[9] = new JMenuItem("Sosnowski'sHogweed");
         for(int i=0;i<menuLength;i++)
         {
             add(menuItems[i]);

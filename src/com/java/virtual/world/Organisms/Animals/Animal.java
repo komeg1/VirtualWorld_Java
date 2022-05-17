@@ -5,12 +5,21 @@ import com.java.virtual.world.Organisms.Organism;
 import com.java.virtual.world.WorldManager.World;
 
 import java.awt.*;
+import java.util.Objects;
 import java.util.Vector;
 
 public class Animal extends Organism {
     public Animal(int power, int initiative, int x, int y, World world, String sign,String fullname,Color color) {
         super(world, initiative, power, new Coordinates(x, y), color, sign,fullname);
 
+    }
+
+    public Animal(int power, int initiative, int x, int y, World world, String sign, String fullname, Color color, int lifetime, int breedingtimeout) {
+        super(world,initiative,power,new Coordinates(x,y),color,sign,fullname,lifetime,breedingtimeout);
+    }
+
+    public Animal(int power, int initiative, int x, int y, World world, String sign, String fullname, Color color, int isKilled) {
+        super(world,initiative,power,new Coordinates(x,y),color,sign,fullname,isKilled);
     }
 
     @Override
@@ -48,7 +57,7 @@ public class Animal extends Organism {
 
     public boolean Collision(Organism other) {
         Organism[][] worldboard = world.getWorldBoard();
-        if(this.getSign()==other.getSign())
+        if(Objects.equals(this.getSign(), other.getSign()))
         {
             if(Breeding(other)) {
                 world.AddLog(this,other,this.coordinates,"BREED");
@@ -90,7 +99,7 @@ public class Animal extends Organism {
 
     boolean Breeding(Organism other)
     {
-        if (this.getSign()=="H")
+        if (Objects.equals(this.getSign(), "H"))
             return false;
         if (this.getBreedingTimeout() ==0 && other.getBreedingTimeout() == 0)
         {

@@ -6,7 +6,7 @@ import com.java.virtual.world.Organisms.Plants.*;
 import java.awt.*;
 
 public class Colors {
-    public Colors(){};
+    public Colors(){}
 
     public Color getColor(String name){
         Color color= new Color(0,0,0);
@@ -20,7 +20,7 @@ public class Colors {
             case "Dandelion" -> color = new Color(231, 220, 89);
             case "Guarana" -> color = new Color(0, 20, 96);
             case "Berries" -> color =new Color(253, 108, 245);
-            case "Sosnowski's Hogweed" -> color =new Color(255, 0, 0);
+            case "Sosnowski'sHogweed" -> color =new Color(255, 0, 0);
             case "Human" -> color =new Color(56, 138, 255);
         }
         return color;

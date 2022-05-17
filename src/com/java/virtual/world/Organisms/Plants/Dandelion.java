@@ -6,7 +6,9 @@ public class Dandelion extends Plant{
     public Dandelion(int x, int y, World world) {
         super(0, 0, x, y, world, "D","Dandelion", world.getColors().getColor("Dandelion"));
     }
-
+    public Dandelion(int x,int y, World world, int power,int initiative, int lifetime, int breedingtimeout,String sign){
+        super(power,initiative,x,y,world,sign,"Dandelion",world.getColors().getColor("Dandelion"),lifetime,breedingtimeout);
+    }
 
     @Override
     public void Action() {

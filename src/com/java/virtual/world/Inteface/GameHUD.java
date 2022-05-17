@@ -1,5 +1,6 @@
 package com.java.virtual.world.Inteface;
 
+import com.java.virtual.world.SavesManagement.Loading;
 import com.java.virtual.world.SavesManagement.Saving;
 import com.java.virtual.world.WorldManager.GameArea;
 import com.java.virtual.world.WorldManager.World;
@@ -9,11 +10,12 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Scanner;
 import java.util.Vector;
 
 public class GameHUD extends JFrame implements KeyListener{
-    private GameArea gameArea;
-    private World world;
+    private final GameArea gameArea;
+    private final World world;
     private final int KEY_NULL = 0;
     private final int KEY_UP = 1;
     private final int KEY_LEFT =2;
@@ -29,80 +31,30 @@ public class GameHUD extends JFrame implements KeyListener{
     private JLabel playerSkillCooldown;
     private JPanel gameDescription;
     private JPanel grid;
-    private int x;
-    private int y;
-    private Saving save;
-    private final JTextArea logs;
+    private final int x;
+    private final int y;
+    private final Saving save;
+    private final JTextArea logs= new JTextArea(20,20);
+
     public GameHUD(int x,int y)
     {
         this.x =x;
         this.y=y;
         this.world = new World(x,y);
         this.save = new Saving(world);
+
         gameArea = this.world.getArea();
-        setSize(1300,1000);
-        setLocation(200,50);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout(8,6));
-        setBackground(Color.darkGray);
-        getRootPane().setBorder(BorderFactory.createMatteBorder(4,4,4,4, Color.darkGray));
+        TurnOnHud();
+    }
+    public GameHUD(int x, int y, Scanner input)
+    {
+        this.x =x;
+        this.y=y;
+        this.world = new World(x,y,input);
+        this.save = new Saving(world);
 
-        JPanel topPanel = new JPanel();
-
-        topPanel.setBackground(Color.darkGray);
-        topPanel.setLayout(new FlowLayout(5));
-
-        JPanel middlePanel = new JPanel();
-        middlePanel.setBorder(new LineBorder(Color.black,3));
-        middlePanel.setLayout(new FlowLayout(1,4,4));
-        middlePanel.setBackground(Color.darkGray);
-
-        JPanel gridPanel = new JPanel();
-        gridPanel.setLayout(new GridLayout(3,1,0,0));
-        gridPanel.setBackground(Color.darkGray);
-
-
-        SetPlayerInformation();
-        CreateGrid();
-        CreateGameDescription();
-        JButton saveButton = new JButton("Save");
-        JButton nextTurn = new JButton("Next Turn");
-
-        nextTurn.setBounds(500,1000,100,100);
-        nextTurn.addActionListener(e->{
-            world.setHumanMove(KEY_NULL);
-            world.NextTurn();
-            gameArea.updateArea();
-            UpdateLogs();
-            UpdatePlayerInformation();
-            requestFocus();
-
-        });
-        saveButton.setBounds(500,900,100,100);
-        saveButton.addActionListener(e->{save.Save();});
-
-        logs = new JTextArea(20,20);
-        JScrollPane logsScroll = new JScrollPane(logs);
-
-
-
-
-        addKeyListener(this);
-        setFocusable(true);
-        topPanel.add(nextTurn);
-        topPanel.add(saveButton);
-        gridPanel.add(logsScroll);
-        gridPanel.add(playerInfo);
-        gridPanel.add(gameDescription);
-        middlePanel.add(gridPanel);
-
-        add(topPanel,BorderLayout.NORTH);
-        add(middlePanel,BorderLayout.WEST);
-        add(grid,BorderLayout.CENTER);
-        getContentPane().setBackground(Color.white);
-        gameArea.updateArea();
-        setResizable(false);
-        setVisible(true);
+        gameArea = this.world.getArea();
+        TurnOnHud();
     }
 
 
@@ -237,6 +189,81 @@ public class GameHUD extends JFrame implements KeyListener{
             return "TAK";
         return "NIE";
     }
+
+    public void TurnOnHud(){
+        setSize(1300,1000);
+        setLocation(200,50);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout(8,6));
+        setBackground(Color.darkGray);
+        getRootPane().setBorder(BorderFactory.createMatteBorder(4,4,4,4, Color.darkGray));
+
+
+        SetPlayerInformation();
+
+        CreateGrid();
+        CreateGameDescription();
+        InitializePanels();
+
+        addKeyListener(this);
+        setFocusable(true);
+
+
+        add(grid,BorderLayout.CENTER);
+        getContentPane().setBackground(Color.white);
+        gameArea.updateArea();
+        setResizable(false);
+        setVisible(true);
+    }
+
+    public void InitializePanels(){
+        JPanel topPanel = new JPanel();
+
+        topPanel.setBackground(Color.darkGray);
+        topPanel.setLayout(new FlowLayout(5));
+
+        JPanel middlePanel = new JPanel();
+        middlePanel.setBorder(new LineBorder(Color.black,3));
+        middlePanel.setLayout(new FlowLayout(1,4,4));
+        middlePanel.setBackground(Color.darkGray);
+
+        JButton backButton = new JButton("Main Menu");
+        JButton saveButton = new JButton("Save");
+        JButton nextTurn = new JButton("Next Turn");
+
+        nextTurn.setSize(100,100);
+        nextTurn.addActionListener(e->{
+            world.setHumanMove(KEY_NULL);
+            world.NextTurn();
+            gameArea.updateArea();
+            UpdateLogs();
+            UpdatePlayerInformation();
+            requestFocus();
+
+        });
+        saveButton.setSize(100,100);
+        saveButton.addActionListener(e->{save.OpenWindow();});
+        backButton.setSize(100,100);
+        backButton.addActionListener(e->{
+            setVisible(false);
+            new Menu();
+        });
+        JPanel gridPanel = new JPanel();
+        gridPanel.setLayout(new GridLayout(3,1,0,0));
+        gridPanel.setBackground(Color.darkGray);
+        topPanel.add(backButton);
+        topPanel.add(nextTurn);
+        topPanel.add(saveButton);
+        JScrollPane logsScroll = new JScrollPane(logs);
+        gridPanel.add(logsScroll);
+        gridPanel.add(playerInfo);
+        gridPanel.add(gameDescription);
+        middlePanel.add(gridPanel);
+        add(topPanel,BorderLayout.NORTH);
+        add(middlePanel,BorderLayout.WEST);
+
+    }
+
 
 
 

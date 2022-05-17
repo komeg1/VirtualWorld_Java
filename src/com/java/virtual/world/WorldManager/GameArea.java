@@ -7,10 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameArea extends JPanel {
-    private OrganismField[][] area;
-    private World world;
-    private int y;
-    private int x;
+    private final OrganismField[][] area;
+    private final World world;
+    private final int y;
+    private final int x;
     GameArea(int x,int y,World world)
     {
         this.area= new OrganismField[x][y];
@@ -29,11 +29,15 @@ public class GameArea extends JPanel {
             }
         for(int i=0;i<world.getOrganismsArray().size();i++) {
             Organism organism = world.getOrganismsArray().get(i);
+            if(organism.getKilled()==0)
+            {
+
                 int organism_x = organism.getCoordinates().GetX();
                 int organism_y = organism.getCoordinates().GetY();
                 Color organism_color = organism.getColor();
                 String organism_sign = organism.getSign();
                 area[organism_y][organism_x].SetField(organism_color, new JLabel(organism_sign));
+            }
         }
     }
 

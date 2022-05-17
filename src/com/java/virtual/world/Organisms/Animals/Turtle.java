@@ -11,6 +11,9 @@ public class Turtle extends Animal{
     public Turtle(int x,int y, World world) {
         super(2, 1, x, y, world, "T","Turtle", world.getColors().getColor("Turtle"));
     }
+    public Turtle(int x,int y, World world, int power,int initiative, int lifetime, int breedingtimeout,String sign){
+        super(power,initiative,x,y,world,sign,"Turtle",world.getColors().getColor("Turtle"),lifetime,breedingtimeout);
+    }
 
     @Override
     public void Action(){

@@ -4,6 +4,7 @@ import com.java.virtual.world.Organisms.Coordinates;
 import com.java.virtual.world.Organisms.Organism;
 import com.java.virtual.world.WorldManager.World;
 
+import java.util.Objects;
 import java.util.Random;
 import java.util.Vector;
 
@@ -11,11 +12,13 @@ public class Antelope extends Animal {
     public Antelope(int x, int y, World world) {
         super(4, 4, x, y, world, "A", "Antelope",world.getColors().getColor("Antelope"));
     }
-
+    public Antelope(int x,int y, World world, int power,int initiative, int lifetime, int breedingtimeout,String sign){
+        super(power,initiative,x,y,world,sign,"Antelope",world.getColors().getColor("Antelope"),lifetime,breedingtimeout);
+    }
 
     @Override
     public boolean Collision(Organism other) {
-        if(this.getSign()==other.getSign())
+        if(Objects.equals(this.getSign(), other.getSign()))
         {
             if(Breeding(other)) {
                 world.AddLog(this,other,this.coordinates,"BREED");

@@ -9,7 +9,10 @@ import java.util.Vector;
 
 public class SosnowskiHogweed extends Plant{
     public SosnowskiHogweed(int x, int y, World world) {
-        super(10, 0, x, y, world, "Ho","Sosnowski's Hogweed", world.getColors().getColor("Sosnowski's Hogweed"));
+        super(10, 0, x, y, world, "Ho","Sosnowski'sHogweed", world.getColors().getColor("Sosnowski'sHogweed"));
+    }
+    public SosnowskiHogweed(int x,int y, World world, int power,int initiative, int lifetime, int breedingtimeout,String sign){
+        super(power,initiative,x,y,world,sign,"Sosnowski'sHogweed",world.getColors().getColor("Sosnowski'sHogweed"),lifetime,breedingtimeout);
     }
 
     @Override

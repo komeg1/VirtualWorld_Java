@@ -10,7 +10,9 @@ public class Fox extends Animal {
     public Fox(int x, int y, World world) {
         super(3, 7, x, y, world, "F", "Fox",world.getColors().getColor("Fox"));
     }
-
+    public Fox(int x,int y, World world, int power,int initiative, int lifetime, int breedingtimeout,String sign){
+        super(power,initiative,x,y,world,sign,"Fox",world.getColors().getColor("Fox"),lifetime,breedingtimeout);
+    }
     @Override
     public void Action() {
         Coordinates currentCoords = getCoordinates();
