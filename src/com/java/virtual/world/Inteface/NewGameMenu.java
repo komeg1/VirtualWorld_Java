@@ -17,8 +17,8 @@ public class NewGameMenu extends JFrame {
     private final JSpinner humanYSpinner = new JSpinner();
     private int x;
     private int y;
-    private int humanX;
-    private int humanY;
+    private int humanX=0;
+    private int humanY=0;
     private double fulfill=0.25;
 
     NewGameMenu(){

@@ -116,9 +116,9 @@ public class GameHUD extends JFrame implements KeyListener{
         this.playerHead = new JLabel("GRACZ");
         this.playerPosition=new JLabel( "Pozycja: X: "+world.getHuman().getCoordinates().GetX()+" Y: "+world.getHuman().getCoordinates().GetY());
         this.playerPower=new JLabel("Siła: "+world.getHuman().getPower());
-        this.isPlayerSkillActive = new JLabel("UMIEJETNOSC WLACZONA: " + isHumanSkillActive());
-        this.playerSkillCooldown = new JLabel("UMIEJETNOSC COOLDOWN: "+world.getHuman().getSkillCooldown());
-        this.playerSkillTurnsCounter = new JLabel("UMIEJETNOSC AKTYWNA PRZEZ: "+ world.getHuman().getSkillTurnLeft() + " TURY");
+        this.isPlayerSkillActive = new JLabel("SKILL ACTIVE: " + isHumanSkillActive());
+        this.playerSkillCooldown = new JLabel("SKILL COOLDOWN: "+world.getHuman().getSkillCooldown());
+        this.playerSkillTurnsCounter = new JLabel("SKILL ACTIVE FOR : "+ world.getHuman().getSkillTurnLeft() + " TURNS MORE");
         playerInfo = new JPanel(new GridLayout(10,1,0,0));
         playerInfo.add(playerHead);
         playerInfo.add(playerPosition);
@@ -131,14 +131,14 @@ public class GameHUD extends JFrame implements KeyListener{
         if(world.getHuman().getKilled()==0) {
             playerPosition.setText("Pozycja: X: " + world.getHuman().getCoordinates().GetX() + " Y: " + world.getHuman().getCoordinates().GetY());
             playerPower.setText("Siła: " + world.getHuman().getPower());
-            isPlayerSkillActive.setText("UMIEJETNOSC WLACZONA: " + isHumanSkillActive());
-            playerSkillCooldown.setText("UMIEJETNOSC COOLDOWN: "+world.getHuman().getSkillCooldown());
-            playerSkillTurnsCounter.setText("UMIEJETNOSC AKTYWNA PRZEZ: "+ world.getHuman().getSkillTurnLeft() + " TURY");
+            isPlayerSkillActive.setText("SKILL ACTIVE: " + isHumanSkillActive());
+            playerSkillCooldown.setText("SKILL COOLDOWN: "+world.getHuman().getSkillCooldown());
+            playerSkillTurnsCounter.setText("SKILL ACTIVE FOR: "+ world.getHuman().getSkillTurnLeft() + " TURNS MORE");
         }
         else
         {
 
-            playerHead.setText("GRACZ NIE ŻYJE");
+            playerHead.setText("PLAYER IS DEAD");
             playerPosition.setText("");
             playerPower.setText("");
             isPlayerSkillActive.setText("");
@@ -187,8 +187,8 @@ public class GameHUD extends JFrame implements KeyListener{
 
     public String isHumanSkillActive(){
         if(world.getHuman().getSkillIsActive())
-            return "TAK";
-        return "NIE";
+            return "YES";
+        return "NO";
     }
 
     public void TurnOnHud(){
