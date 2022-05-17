@@ -36,11 +36,12 @@ public class GameHUD extends JFrame implements KeyListener{
     private final Saving save;
     private final JTextArea logs= new JTextArea(20,20);
 
-    public GameHUD(int x,int y)
+    public GameHUD(int x,int y,double fulfill, int humanX,int humanY)
     {
+
         this.x =x;
         this.y=y;
-        this.world = new World(x,y);
+        this.world = new World(x,y,fulfill,humanX,humanY);
         this.save = new Saving(world);
 
         gameArea = this.world.getArea();
@@ -160,7 +161,7 @@ public class GameHUD extends JFrame implements KeyListener{
 
     public void CreateGameDescription() {
         gameDescription = new JPanel(new GridLayout(11, 1, 0, 0));
-        String[] organismsNames = {"Human","Wolf","Antelope","Sheep","Turtle","Fox","Grass","Dandelion","Guarana","Berries","Sosnowski's Hogweed"};
+        String[] organismsNames = {"Human","Wolf","Antelope","Sheep","Turtle","Fox","Grass","Dandelion","Guarana","Berries","Sosnowski'sHogweed"};
         for(int i=0;i<organismsNames.length;i+=2){
             JPanel organismDesc = new JPanel(new FlowLayout(FlowLayout.LEFT,1,1));
             JPanel color1 = new JPanel(new FlowLayout());
@@ -191,6 +192,7 @@ public class GameHUD extends JFrame implements KeyListener{
     }
 
     public void TurnOnHud(){
+        setTitle("Virtual World Simulator");
         setSize(1300,1000);
         setLocation(200,50);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -259,6 +261,9 @@ public class GameHUD extends JFrame implements KeyListener{
         gridPanel.add(playerInfo);
         gridPanel.add(gameDescription);
         middlePanel.add(gridPanel);
+
+        AuthorPanel author = new AuthorPanel();
+        add(author,BorderLayout.SOUTH);
         add(topPanel,BorderLayout.NORTH);
         add(middlePanel,BorderLayout.WEST);
 

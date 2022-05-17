@@ -13,7 +13,7 @@ public class GameArea extends JPanel {
     private final int x;
     GameArea(int x,int y,World world)
     {
-        this.area= new OrganismField[x][y];
+        this.area= new OrganismField[y][x];
         this.x =x;
         this.y =y;
 

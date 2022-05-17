@@ -31,7 +31,7 @@ public class World implements KeyListener {
     private Vector<String> logs;
     private final Colors colors = new Colors();
 
-    public World(int x,int y){
+    public World(int x,int y,double fulfillPercentage, int humanX,int humanY){
         this.worldX=x;
         this.worldY=y;
         this.turn=0;
@@ -43,7 +43,7 @@ public class World implements KeyListener {
                 worldBoard[i][j]=null;
 
 
-        StartRandomGame();
+        StartRandomGame(fulfillPercentage,humanX,humanY);
     }
     public World(int x,int y,Scanner input){
         this.worldX=x;
@@ -185,10 +185,10 @@ public class World implements KeyListener {
 
     }
 
-    public void StartRandomGame(){
+    public void StartRandomGame(double fulfillPercentage,int humanX,int humanY){
         int boardSize = worldY*worldX;
-        human =new Human(0,0,this);
-         int maxCreaturesAmount = (int)Math.round(0.03*boardSize);
+        human =new Human(humanX,humanY,this);
+         int maxCreaturesAmount = (int)Math.round(fulfillPercentage*boardSize);
         String[] organismsNames = {"Wolf","Antelope","Sheep","Turtle","Fox","Grass","Dandelion","Guarana","Sosnowski's Hogweed","Berries",};
         Random seed = new Random();
         int x,y;

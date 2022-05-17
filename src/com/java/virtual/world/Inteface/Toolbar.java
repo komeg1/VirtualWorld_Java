@@ -4,31 +4,37 @@ import com.java.virtual.world.WorldManager.OrganismListener;
 import com.java.virtual.world.WorldManager.World;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Toolbar extends JPopupMenu {
-    public int menuLength;
+    public final int menuLength=11;
 
-    JMenuItem[] menuItems;
+
+    JMenuItem[] menu;
 
     public Toolbar(int x, int y, World world)
     {
-        this.menuLength = 10;
 
-        menuItems = new JMenuItem[menuLength];
-        menuItems[0] = new JMenuItem("Antelope");
-        menuItems[1] = new JMenuItem("Fox");
-        menuItems[2] = new JMenuItem("Sheep");
-        menuItems[3] = new JMenuItem("Turtle");
-        menuItems[4] = new JMenuItem("Wolf");
-        menuItems[5] = new JMenuItem("Grass");
-        menuItems[6] = new JMenuItem("Dandelion");
-        menuItems[7] = new JMenuItem("Guarana");
-        menuItems[8] = new JMenuItem("Berries");
-        menuItems[9] = new JMenuItem("Sosnowski'sHogweed");
+        JMenuItem fieldCoordinates = new JMenuItem("X: "+x+" Y: "+y);
+        fieldCoordinates.setBackground(Color.black);
+        fieldCoordinates.setForeground(Color.white);
+        menu= new JMenuItem[]{
+                    fieldCoordinates,
+                    new JMenuItem("Wolf"),
+                    new JMenuItem("Antelope"),
+                    new JMenuItem("Fox"),
+                    new JMenuItem("Sheep"),
+                    new JMenuItem("Turtle"),
+                    new JMenuItem("Grass"),
+                    new JMenuItem("Dandelion"),
+                    new JMenuItem("Guarana"),
+                    new JMenuItem("Berries"),
+                    new JMenuItem("Sosnowski'sHogweed")};
         for(int i=0;i<menuLength;i++)
         {
-            add(menuItems[i]);
-            menuItems[i].addActionListener(new OrganismListener(x,y,world,menuItems[i].getText()));
+            add(menu[i]);
+            menu[i].addActionListener(new OrganismListener(x,y,world,menu[i].getText()));
         }
+
     }
 }

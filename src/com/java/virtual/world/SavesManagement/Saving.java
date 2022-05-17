@@ -59,7 +59,7 @@ public class Saving{
                     Save();
                 }
             } else {
-                System.out.println("File already exists.");
+                showMessageDialog(null, "File already exists.");
             }
         }
         catch (IOException e) {

@@ -2,48 +2,71 @@ package com.java.virtual.world.Inteface;
 
 import javax.swing.*;
 
+import java.awt.*;
+
 import static javax.swing.JOptionPane.showMessageDialog;
 public class NewGameMenu extends JFrame {
     private final JButton backToMainMenu= new JButton("<-Back");
     private final JButton nextButton = new JButton("Start");
-    private final JSpinner worldXSpinner = new JSpinner();
-    private final JSpinner worldYSpinner = new JSpinner();
+    private final JSlider worldXSlider = new JSlider(0,200,20);
+    private final JSlider worldYSlider = new JSlider(0,200,20);
+    private final JSlider fulfillSlider = new JSlider(JSlider.HORIZONTAL,0,50,10);
+    private final JLabel fulfillDesc = new JLabel("Percentage fulfill of organisms on map: 25%");
+    private final JLabel worldX = new JLabel("Set world size: 20x20");
+    private final AuthorPanel authorPanel = new AuthorPanel();
     private int x;
     private int y;
+    private double fulfill=0.25;
 
     NewGameMenu(){
 
 
-        nextButton.setBounds(290,420,100,50);
-        JLabel worldX = new JLabel("Set world X size");
-        worldX.setBounds(150,50,150,50);
-        JLabel worldY = new JLabel("Set world Y size");
-        worldY.setBounds(150,90,150,50);
-        backToMainMenu.setBounds(0,0,120,50);
-        worldXSpinner.setBounds(150,80,100,20);
-        worldYSpinner.setBounds(150,130,100,20);
+        nextButton.setSize(100,50);
 
-        add(backToMainMenu);
-        add(worldX);
-        add(worldY);
-        add(nextButton);
-        add(worldXSpinner);
-        add(worldYSpinner);
+        worldX.setSize(150,50);
+        setTitle("Virtual World Simulator");
+
+
+        JPanel options = new JPanel();
+        options.setLayout(new GridLayout(8,1,1,1));
+
+        worldXSlider.setValue(20);
+        x=20;
+        y=20;
+        setLayout(new BorderLayout(8,6));
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        backToMainMenu.setSize(100,50);
+        nextButton.setSize(100,50);
+        topPanel.add(backToMainMenu);
+        topPanel.add(nextButton);
+        options.add(worldX);
+        options.add(worldXSlider);
+        options.add(fulfillDesc);
+        options.add(fulfillSlider);
+
+        add(topPanel,BorderLayout.NORTH);
+        add(options,BorderLayout.CENTER);
+
+
+        add(authorPanel,BorderLayout.SOUTH);
+
+
         setButtonActions();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLayout(null);
+
         setSize(400,500);
         setLocation(700,250);
         setVisible(false);
     }
 
     public void setButtonActions(){
-        worldXSpinner.addChangeListener(
-                e->{this.x = (Integer)worldXSpinner.getValue();}
+        worldXSlider.addChangeListener(
+                e->{this.x = worldXSlider.getValue();
+                    this.y = worldXSlider.getValue();
+                    worldX.setText("Set world size: "+x+"x"+x);}
         );
-        worldYSpinner.addChangeListener(
-                e->{this.y = (Integer)worldYSpinner.getValue();}
-        );
+
         backToMainMenu.addActionListener(
                 e->{setVisible(false);
                     new Menu().setVisible(true);}
@@ -54,10 +77,19 @@ public class NewGameMenu extends JFrame {
                 else
                 {
                     setVisible(false);
-                    new GameHUD(x,y);
+                    new GameHUD(x,y,fulfill,0,0);
                 }
                     }
         );
+
+        fulfillSlider.addChangeListener(
+                e->{
+                    this.fulfill = (0.01*fulfillSlider.getValue());
+                    fulfillDesc.setText("Percentage fulfill of organisms on map: "+ this.fulfillSlider.getValue()+"%");
+                }
+        );
+
+
     }
 
 
