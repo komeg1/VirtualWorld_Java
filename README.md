@@ -14,6 +14,10 @@ Initiative tells which organism moves in what order.
 Animals can move in each round. Plants can spread in each round.
 If there's collision animal with bigger strength win (unless it has a default action method [TABLE BELOW] ). If they have the same strength, the one with longer lifetime wins.
 
+The Simulator contains such organisms:
+
+![table](https://user-images.githubusercontent.com/61662701/171057510-67440917-8e87-489e-9c4b-a2aa59f81381.png)
+
 ## General information
 
 You can play the simulation by downloading the ```javavirtualworld.jar``` file or by downloading all the files and compiling them.
