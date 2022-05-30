@@ -8,8 +8,8 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class NewGameMenu extends JFrame {
     private final JButton backToMainMenu= new JButton("<-Back");
     private final JButton nextButton = new JButton("Start");
-    private final JSlider worldXSlider = new JSlider(0,200,20);
-    private final JSlider worldYSlider = new JSlider(0,200,20);
+    private final JSlider worldXSlider = new JSlider(0,100,20);
+    private final JSlider worldYSlider = new JSlider(0,100,20);
     private final JSlider fulfillSlider = new JSlider(JSlider.HORIZONTAL,0,50,10);
     private final JLabel fulfillDesc = new JLabel("Percentage fulfill of organisms on map: 25%");
     private final JLabel worldX = new JLabel("Set world size: 20x20");

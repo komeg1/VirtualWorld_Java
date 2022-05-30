@@ -113,9 +113,9 @@ public class GameHUD extends JFrame implements KeyListener{
     }
 
     public void SetPlayerInformation(){
-        this.playerHead = new JLabel("GRACZ");
-        this.playerPosition=new JLabel( "Pozycja: X: "+world.getHuman().getCoordinates().GetX()+" Y: "+world.getHuman().getCoordinates().GetY());
-        this.playerPower=new JLabel("Siła: "+world.getHuman().getPower());
+        this.playerHead = new JLabel("PLAYER INFORMATION");
+        this.playerPosition=new JLabel( "POSITION: X: "+world.getHuman().getCoordinates().GetX()+" Y: "+world.getHuman().getCoordinates().GetY());
+        this.playerPower=new JLabel("POWER: "+world.getHuman().getPower());
         this.isPlayerSkillActive = new JLabel("SKILL ACTIVE: " + isHumanSkillActive());
         this.playerSkillCooldown = new JLabel("SKILL COOLDOWN: "+world.getHuman().getSkillCooldown());
         this.playerSkillTurnsCounter = new JLabel("SKILL ACTIVE FOR : "+ world.getHuman().getSkillTurnLeft() + " TURNS MORE");
@@ -129,8 +129,8 @@ public class GameHUD extends JFrame implements KeyListener{
     }
     public void UpdatePlayerInformation(){
         if(world.getHuman().getKilled()==0) {
-            playerPosition.setText("Pozycja: X: " + world.getHuman().getCoordinates().GetX() + " Y: " + world.getHuman().getCoordinates().GetY());
-            playerPower.setText("Siła: " + world.getHuman().getPower());
+            playerPosition.setText("POSITION: X: " + world.getHuman().getCoordinates().GetX() + " Y: " + world.getHuman().getCoordinates().GetY());
+            playerPower.setText("POWER: " + world.getHuman().getPower());
             isPlayerSkillActive.setText("SKILL ACTIVE: " + isHumanSkillActive());
             playerSkillCooldown.setText("SKILL COOLDOWN: "+world.getHuman().getSkillCooldown());
             playerSkillTurnsCounter.setText("SKILL ACTIVE FOR: "+ world.getHuman().getSkillTurnLeft() + " TURNS MORE");

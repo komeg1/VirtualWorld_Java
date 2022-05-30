@@ -104,7 +104,7 @@ public class World implements KeyListener {
         sortOrganisms();
 
     turn++;
-        logs.addElement("TURA "+turn);
+        logs.addElement("TURN "+turn);
         for (int i=0;i<organisms.size(); i++) {
             if(organisms.get(i).getKilled()==0) {
                 organisms.get(i).Action();
@@ -141,17 +141,17 @@ public class World implements KeyListener {
     public void AddLog(Organism a, Organism b, Coordinates coords, String type)
     {
         if(Objects.equals(type, "KILL"))
-            logs.addElement("ZABOJSTWO: '"+ a.getSign() + "' zabija '"+b.getSign()+"' na pozycji x: "+coords.GetX()+ " y: "+coords.GetY());
+            logs.addElement("KILL: '"+ a.getSign() + "' kills '"+b.getSign()+"' on x: "+coords.GetX()+ " y: "+coords.GetY());
         else if(Objects.equals(type,"ESCAPE"))
-            logs.addElement("UCIECZKA: '"+a.getSign()+"' ucieka przed walką");
+            logs.addElement("ESCAPE: '"+a.getSign()+"' escape from a fight with '"+b.getSign()+"'");
         else if(Objects.equals(type,"BLOCK"))
-            logs.addElement("BLOK: '"+a.getSign()+"' blokuje atak '"+b.getSign()+"'");
+            logs.addElement("BLOCK: '"+a.getSign()+"' blocks attack of '"+b.getSign()+"'");
         else if(Objects.equals(type,"BREED"))
-            logs.addElement("ROZMNOZENIE: '"+a.getSign()+"' na polu x: "+coords.GetX()+" y: "+coords.GetY());
+            logs.addElement("BREED: '"+a.getSign()+"' breeds on x: "+coords.GetX()+" y: "+coords.GetY());
         else if(Objects.equals(type,"GUARANA"))
-            logs.addElement("WZMOCNIENIE: '"+a.getSign() + "' zjadł guaranę. Jego siła wynosi: "+a.getPower());
+            logs.addElement("BOOST: '"+a.getSign() + "' eats guarana. It's force growns to: "+a.getPower());
         else if(Objects.equals(type,"BERRIES"))
-            logs.addElement("SMIERC: '"+a.getSign() + "zjadł wilcze jagody i umiera.");
+            logs.addElement("DEATH: '"+a.getSign() + "' eats wolf berries and it dies.");
 
 
 
@@ -163,7 +163,7 @@ public class World implements KeyListener {
 
     public void AddOrganism(Coordinates coords,String name){
         if(worldBoard[coords.GetY()][coords.GetX()]!=null)
-            showMessageDialog(null, "Te pole jest zajęte");
+            showMessageDialog(null, "The field is not available");
             else
         {
             switch (name) {
@@ -189,7 +189,8 @@ public class World implements KeyListener {
         int boardSize = worldY*worldX;
         human =new Human(humanX,humanY,this);
          int maxCreaturesAmount = (int)Math.round(fulfillPercentage*boardSize);
-        String[] organismsNames = {"Wolf","Antelope","Sheep","Turtle","Fox","Grass","Dandelion","Guarana","Sosnowski's Hogweed","Berries",};
+
+        String[] organismsNames = {"Wolf","Antelope","Sheep","Turtle","Fox","Grass","Dandelion","Guarana","Sosnowski'sHogweed","Berries",};
         Random seed = new Random();
         int x,y;
 

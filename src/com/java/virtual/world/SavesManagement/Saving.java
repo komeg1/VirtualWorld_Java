@@ -55,7 +55,7 @@ public class Saving{
             save = new File(workingDirectory+"/"+name+".txt");
             if (save.createNewFile()) {
                 {
-                    System.out.println("File created: " + save.getName());
+                    //System.out.println("File created: " + save.getName());
                     Save();
                 }
             } else {
